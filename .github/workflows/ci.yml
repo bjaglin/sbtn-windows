@@ -5,7 +5,7 @@ on:
       - main
   pull_request:
 jobs:
-  default:
+  windows-powershell:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,8 +14,8 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: sbt/setup-sbt@v1
-      - run: sbt -v --client 'show sbtVersion'
-  bash:
+      - run: sbt -v --client --allow-empty 'show sbtVersion'
+  windows-bash:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,5 +24,16 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: sbt/setup-sbt@v1
-      - run: sbt -v --client 'show sbtVersion'
+      - run: sbt -v --client --allow-empty 'show sbtVersion'
+        shell: bash
+  ubuntu-bash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: sbt/setup-sbt@v1
+      - run: sbt -v --client --allow-empty 'show sbtVersion'
         shell: bash
